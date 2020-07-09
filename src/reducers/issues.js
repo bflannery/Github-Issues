@@ -1,11 +1,10 @@
 import {
-    USER_GET_REPOS_REQUEST,
-    USER_GET_REPOS_SUCCESS
-} from "../actions/repos";
+    REPO_ISSUES_GET_REQUEST,
+    REPO_ISSUES_GET_SUCCESS
+} from "../actions/issues";
 
 const initialState = {
-    repos: [],
-    selectedRepo: null,
+    issues: [],
     apiStatus: {
         isLoading: false,
         hasLoaded: false,
@@ -13,10 +12,10 @@ const initialState = {
     }
 }
 
-const reposReducer = (state = initialState, action = {}) => {
+const issuesReducer = (state = initialState, action = {}) => {
     const { type, payload } = action
     switch (type) {
-        case USER_GET_REPOS_REQUEST: {
+        case REPO_ISSUES_GET_REQUEST: {
             return {
                 ...state,
                 apiStatus: {
@@ -25,10 +24,10 @@ const reposReducer = (state = initialState, action = {}) => {
                 }
             }
         }
-        case USER_GET_REPOS_SUCCESS: {
+        case REPO_ISSUES_GET_SUCCESS: {
             return {
                 ...state,
-                repos: {
+                issues: {
                     ...state.repos,
                     ...payload
                 },
@@ -44,4 +43,4 @@ const reposReducer = (state = initialState, action = {}) => {
     }
 }
 
-export default reposReducer
+export default issuesReducer
