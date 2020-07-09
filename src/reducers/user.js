@@ -1,7 +1,8 @@
-import {USER_GET_REPOS_REQUEST} from "../actions/repos";
+import {USER_GET_REPOS_REQUEST, USER_GET_REPOS_SUCCESS} from "../actions/repos";
 
 const initialState = {
     userApiKey: '',
+    apiKeyIsValid: false
 }
 
 const userReducer = (state = initialState, action = {}) => {
@@ -11,6 +12,13 @@ const userReducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 userApiKey: payload,
+                apiKeyIsValid: false,
+            }
+        }
+        case USER_GET_REPOS_SUCCESS: {
+            return {
+                ...state,
+                apiKeyIsValid: true,
             }
         }
         default: return state

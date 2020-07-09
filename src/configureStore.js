@@ -1,30 +1,35 @@
+import { createBrowserHistory } from 'history'
 import { applyMiddleware, createStore } from 'redux'
+import { routerMiddleware } from 'connected-react-router'
+import createRootReducer from './reducers'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+// import { persistStore, persistReducer } from 'redux-persist'
+// import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
-import rootReducer from './reducers'
+export const history = createBrowserHistory()
 
-const persistConfig = {
-    key: 'root',
-    storage,
-}
+// const persistConfig = {
+//     key: 'root',
+//     storage,
+// }
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+// const persistedReducer = persistReducer(persistConfig, createRootReducer(history))
 
 export default function configureStore(preloadedState) {
-    const middleware = [thunkMiddleware]
+    const middleware = [routerMiddleware(history), thunkMiddleware]
     const middlewareEnhancer = applyMiddleware(...middleware)
 
-    const store = createStore(persistedReducer, preloadedState, composeWithDevTools(
+    const store = createStore(createRootReducer(history), preloadedState, composeWithDevTools(
         middlewareEnhancer,
         // other store enhancers if any
     ));
-    if (process.env.NODE_ENV !== 'production' && module.hot) {
-        module.hot.accept('./reducers', () => store.replaceReducer(persistedReducer))
-    }
+    // if (process.env.NODE_ENV !== 'production' && module.hot) {
+    //     module.hot.accept('./reducers', () => store.replaceReducer(persistedReducer))
+    // }
 
-    const persistor = persistStore(store)
-    return { store, persistor }
+    // const persistor = persistStore(store)
+    // return { store, persistor }
+
+    return store
 }

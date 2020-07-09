@@ -1,3 +1,5 @@
+import { push } from 'connected-react-router'
+
 export const ACTION_PATH = 'src/actions/repos'
 
 export const USER_GET_REPOS_REQUEST = `${ACTION_PATH}/USER_GET_REPOS_REQUEST`
@@ -29,4 +31,5 @@ export const fetchUserReposAction = (apiKey) => (dispatch, getState) => {
     })
         .then(res => res.json())
         .then(json => dispatch(userReposSuccessAction(json)))
+        .then(() => dispatch(push('/repos')))
 }
