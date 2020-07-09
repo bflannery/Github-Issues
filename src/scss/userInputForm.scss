@@ -1,0 +1,15 @@
+.user-key-form {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  height: 12rem;
+  border-radius: 5px;
+  box-shadow: 0 6px 10px -5px rgba(0, 0, 0, 0.2);
+
+  &__input-field {
+    margin: 2rem 0;
+  }
+}

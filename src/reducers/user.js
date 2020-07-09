@@ -1,7 +1,7 @@
 import {USER_GET_REPOS_REQUEST} from "../actions/repos";
 
 const initialState = {
-    userApiKey: null,
+    userApiKey: '',
 }
 
 const userReducer = (state = initialState, action = {}) => {

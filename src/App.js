@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { fetchUserReposAction } from "./actions/repos";
 import ReposList from "./components/ReposList";
 import IssuesList from "./components/IssuesList";
+import UserKeyForm from "./components/UserKeyForm";
 
 const App = () => {
 
@@ -11,36 +12,41 @@ const App = () => {
   const dispatch = useDispatch()
 
   // Redux state selectors
-  const reposState = useSelector(state => state.repos)
-  const issuesState = useSelector(state => state.issues)
+  const reduxState = useSelector(state => state)
+  const { repos, issues, user } = reduxState
 
   // Default component state
-  const initialState = ''
+  const initialState = {
+    apiKey: user.userApiKey,
+    submitted: false,
+  }
 
   // Component State
-  const [ apiKey, setApiKey ] = useState(initialState)
+  const [ localState, setLocalState ] = useState(initialState)
 
   // Dispatch fetch user repos action from redux
-  const handleGetUserRepos = () => {
-    if (apiKey.length !== 0) {
-      dispatch(fetchUserReposAction(apiKey))
+  const handleGetUserRepos = (e) => {
+    e.preventDefault()
+    if (localState.apiKey.length !== 0) {
+      dispatch(fetchUserReposAction(localState.apiKey))
+      setLocalState({ ...localState, submitted: true })
     }
   }
 
   // Update component state with new input value
-  const handleOnChange = (e) => setApiKey(e.currentTarget.value)
+  const handleOnChange = (e) => setLocalState({ ...localState, apiKey: e.currentTarget.value })
 
   return (
-    <div>
-      <div>
-        <input onChange={(e) => handleOnChange(e)} />
-        <button onClick={handleGetUserRepos}>Get user repos.</button>
-      </div>
-      {reposState.apiStatus.isLoading
+    <div className="app-container">
+      <UserKeyForm
+          onChange={handleOnChange}
+          onSubmit={handleGetUserRepos}
+      />
+      {repos.apiStatus.isLoading
           ? <h4> Loading...</h4>
           : <ReposList />
       }
-      {issuesState.apiStatus.isLoading
+      {issues.apiStatus.isLoading
           ? <h4> Loading...</h4>
           : <IssuesList />
       }

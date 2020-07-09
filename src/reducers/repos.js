@@ -21,7 +21,8 @@ const reposReducer = (state = initialState, action = {}) => {
                 ...state,
                 apiStatus: {
                     ...state.apiStatus,
-                    isLoading: true
+                    isLoading: true,
+                    hasLoaded: false
                 }
             }
         }

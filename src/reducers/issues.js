@@ -20,7 +20,8 @@ const issuesReducer = (state = initialState, action = {}) => {
                 ...state,
                 apiStatus: {
                     ...state.apiStatus,
-                    isLoading: true
+                    isLoading: true,
+                    hasLoaded: false
                 }
             }
         }
@@ -28,7 +29,7 @@ const issuesReducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 issues: {
-                    ...state.repos,
+                    ...state.issues,
                     ...payload
                 },
                 apiStatus: {
