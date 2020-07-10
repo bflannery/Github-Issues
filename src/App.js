@@ -1,5 +1,8 @@
 import React from 'react';
 import {useSelector} from "react-redux";
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+
 import ReposList from "./components/ReposList";
 import IssuesList from "./components/IssuesList";
 import Card from "./components/Card";
@@ -60,7 +63,9 @@ const App = () => {
                 <div className="app-page-right-column-container">
                     {pageIssuesReady && (
                         <Card classPrefix="app-page-right-column" title="Issues">
-                            <IssuesList issues={issuesArr} />
+                            <DndProvider backend={HTML5Backend}>
+                             <IssuesList issues={issuesArr} />
+                            </DndProvider>
                         </Card>
                     )}
                     {issues.apiStatus.isLoading && <h4> Loading...</h4>}
