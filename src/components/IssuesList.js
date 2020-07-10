@@ -1,23 +1,56 @@
-import React, {useCallback, useState} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import update from 'immutability-helper'
 
 import Issue from "./Issue";
+import {useDispatch, useSelector} from "react-redux";
+import {setRepoIssues } from "../actions/issues";
+import {saveState} from "../sessionStorage";
+import {normalize} from "normalizr";
+import {issue} from "../reducers/issues";
 
-const IssuesList = ({ issues }) => {
 
-    const issuesArr = Object.values(issues) || []
+const saveListState = (state, issuesList) => {
+    const normalizedIssues = normalize(issuesList,  [issue])
+    const newState = {
+        ...state,
+        issues: {
+            ...state.issues,
+            issues: {
+                ...state.issues.issues,
+                ...normalizedIssues.entities.issues
+            },
+            selectedRepoIssues: {
+                ...state.issues.selectedRepoIssues,
+                ...normalizedIssues.entities.issues
+            }
+        }
+    }
+    saveState(newState)
+}
 
-    const [issuesList, setIssueList] = useState(issuesArr)
+const IssuesList = memo(({ selectedRepo, issues }) => {
+    const dispatch = useDispatch()
+
+    const state = useSelector(state => state)
+
+    const [issuesList, setIssueList] = useState(issues)
+
+    useEffect(() => {
+        if (issuesList.length > 0) {
+            dispatch(setRepoIssues(issuesList))
+            saveListState(state, issuesList)
+        }
+        return () => saveState(state)
+    }, [issuesList])
 
     const moveIssue = useCallback(
     (dragIndex, hoverIndex) => {
-
-        const dragCard = issuesList[dragIndex]
+        const dragIssue = issuesList[dragIndex]
 
         const updatedIssues = update(issuesList, {
             $splice: [
                 [dragIndex, 1],
-                [hoverIndex, 0, dragCard],
+                [hoverIndex, 0, dragIssue],
             ],
         })
 
@@ -30,8 +63,6 @@ const IssuesList = ({ issues }) => {
     },
     [issuesList],
     )
-
-    console.log({ issuesList })
 
     return (
         <div className="issues__list-container">
@@ -47,6 +78,6 @@ const IssuesList = ({ issues }) => {
             </ul>
         </div>
     )
-}
+})
 
 export default IssuesList

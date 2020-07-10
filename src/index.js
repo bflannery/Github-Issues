@@ -4,19 +4,18 @@ import './scss/index.scss';
 import * as serviceWorker from './serviceWorker';
 import {Provider } from 'react-redux'
 import configureStore from './configureStore'
-import { PersistGate } from 'redux-persist/integration/react'
 import AppRouter from "./router";
+import {loadState} from "./sessionStorage";
 
+const isProduction = process.env.NODE_ENV === 'production'
+const initialState = loadState(isProduction)
 
-const { store, persistor } = configureStore()
-// const store = configureStore()
+const store = configureStore(initialState)
 
 ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-             <AppRouter />
-          </PersistGate>
+         <AppRouter />
       </Provider>
   </React.StrictMode>,
   document.getElementById('root')

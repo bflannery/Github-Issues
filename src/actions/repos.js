@@ -1,4 +1,5 @@
 import { push } from 'connected-react-router'
+import {saveState} from "../sessionStorage";
 
 export const ACTION_PATH = 'src/actions/repos'
 
@@ -33,5 +34,7 @@ export const fetchUserReposAction = (apiKey) => (dispatch, getState) => {
     })
         .then(res => res.json())
         .then(json => dispatch(userReposSuccessAction(json)))
+        .then(() => saveState(getState()))
         .then(() => dispatch(push('/repos')))
+        .catch(err => dispatch(userReposFailureAction(err)))
 }

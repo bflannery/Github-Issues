@@ -7,7 +7,7 @@ const Repo = ({ repo }) => {
     const dispatch = useDispatch()
 
     const handleOnClick = () => {
-        dispatch(fetchRepoIssuesAction(repo.full_name))
+        dispatch(fetchRepoIssuesAction(repo))
     }
 
     return (

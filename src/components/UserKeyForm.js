@@ -14,7 +14,6 @@ const UserKeyForm = ({ onChange, onSubmit }) => {
     // Default component state
     const initialState = {
         apiKey: user.userApiKey,
-        submitted: false,
     }
 
     // Component State
@@ -25,7 +24,6 @@ const UserKeyForm = ({ onChange, onSubmit }) => {
         e.preventDefault()
         if (localState.apiKey.length !== 0) {
             dispatch(fetchUserReposAction(localState.apiKey))
-            setLocalState({ ...localState, submitted: true })
         }
     }
 

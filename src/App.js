@@ -2,10 +2,55 @@ import React from 'react';
 import {useSelector} from "react-redux";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import { createSelector } from 'reselect'
+import moment from 'moment'
 
 import ReposList from "./components/ReposList";
 import IssuesList from "./components/IssuesList";
 import Card from "./components/Card";
+
+
+const getIssuesByDateFormat = createSelector(
+    state => state.issues.selectedRepoIssues,
+    state => state.repos.selectedRepo,
+    (repoIssues = {}, selectedRepo = null) => {
+        if (repoIssues === {} || Object.keys(repoIssues).length === 0) return []
+        const repoIssuesArr = Object.values(repoIssues)
+        return repoIssuesArr.map(repoIssue => {
+            let formattedUpdatedAtText = ''
+            const currentDateTime = moment()
+            const lastUpdate = moment(repoIssue.updated_at)
+            const timeDiffHours = currentDateTime.diff(lastUpdate, 'hours')
+            formattedUpdatedAtText = `${timeDiffHours} ${timeDiffHours > 1 ? 'hours' : 'hour'} ago`
+
+            if (timeDiffHours >= 24) {
+                const timeDiffDays = currentDateTime.diff(lastUpdate, 'days')
+                formattedUpdatedAtText = `${timeDiffDays} ${timeDiffDays > 1 ? 'days' : 'day'} ago`
+            }
+            return ({
+            ...repoIssue,
+            repoId: selectedRepo.id,
+            createdAt: moment(repoIssue.created_at).format('MM/DD/YY'),
+            updatedAt: formattedUpdatedAtText
+            })
+        })
+    }
+)
+
+const getFormattedIssues = createSelector(
+    getIssuesByDateFormat,
+    repoIssues => {
+        if (repoIssues.length === 0) return []
+        return repoIssues.map((repoIssue, i) => (
+           (repoIssue.hasOwnProperty('ordinal'))
+               ? repoIssue
+            : ({
+                ...repoIssue,
+                ordinal: i
+            })
+        ))
+    }
+)
 
 const App = () => {
     // Redux state selectors
@@ -24,7 +69,7 @@ const App = () => {
 
     // Format repos and issues object to an array
     const reposArr = Object.values(repos.repos || {})
-    const issuesArr = Object.values(issues.issues || {})
+    const issuesArr = useSelector(getFormattedIssues)
 
     // Check page state is ready to render
     const pageIssuesReady = issuesArr.length > 0  && !issues.apiStatus.isLoading && issues.apiStatus.hasLoaded
@@ -64,7 +109,10 @@ const App = () => {
                     {pageIssuesReady && (
                         <Card classPrefix="app-page-right-column" title="Issues">
                             <DndProvider backend={HTML5Backend}>
-                             <IssuesList issues={issuesArr} />
+                                <IssuesList
+                                 selectedRepo={repos.selectedRepo}
+                                 issues={issuesArr}
+                                />
                             </DndProvider>
                         </Card>
                     )}

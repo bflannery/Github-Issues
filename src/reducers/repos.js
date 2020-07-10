@@ -1,7 +1,9 @@
 import {
     USER_GET_REPOS_REQUEST,
-    USER_GET_REPOS_SUCCESS
+    USER_GET_REPOS_SUCCESS,
+    USER_GET_REPOS_FAILURE
 } from "../actions/repos";
+import {REPO_ISSUES_GET_FAILURE, REPO_ISSUES_GET_REQUEST} from "../actions/issues";
 
 const initialState = {
     repos: [],
@@ -38,6 +40,30 @@ const reposReducer = (state = initialState, action = {}) => {
                     isLoading: false,
                     hasLoaded: true
                 }
+            }
+        }
+        case USER_GET_REPOS_FAILURE: {
+            return {
+                ...state,
+                apiStatus: {
+                    ...state.apiStatus,
+                    isLoading: false,
+                    hasLoaded: false,
+                    loadingError: payload
+                }
+            }
+        }
+
+        case REPO_ISSUES_GET_REQUEST: {
+            return {
+                ...state,
+                selectedRepo: payload
+            }
+        }
+        case REPO_ISSUES_GET_FAILURE: {
+            return {
+                ...state,
+                selectedRepo: null
             }
         }
 

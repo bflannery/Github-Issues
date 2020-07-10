@@ -8,7 +8,6 @@ const ItemTypes = {
 }
 
 const Issue = ({ issue, index, moveIssue }) => {
-    console.log({ index })
     const { assignee } = issue
 
     const avatarSrc = (
@@ -99,8 +98,8 @@ const Issue = ({ issue, index, moveIssue }) => {
             >
                 {issue.title}
             </h4>
-            <h6>{issue.created_at}</h6>
-            <h6>{issue.updated_at}</h6>
+            <h6>{issue.createdAt}</h6>
+            <h6>{issue.updatedAt}</h6>
         </li>
     )
 }
@@ -109,12 +108,12 @@ export default Issue
 
 Issue.propTypes = {
     issue: PropTypes.shape({
-        created_at: PropTypes.string.isRequired,
-        id: PropTypes.number.isRequired,
-        index: PropTypes.number.isRequired,
-        moveCard: PropTypes.func.isRequired,
+        created_at: PropTypes.string,
+        id: PropTypes.number,
+        index: PropTypes.number,
+        moveCard: PropTypes.func,
         title: PropTypes.string,
-        updated_at: PropTypes.string.isRequired,
+        updated_at: PropTypes.string,
     })
 }
 
