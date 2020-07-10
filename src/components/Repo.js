@@ -11,7 +11,13 @@ const Repo = ({ repo }) => {
     }
 
     return (
-        <li key={repo.id} onClick={handleOnClick}> {repo.name}</li>
+        <li
+            className="repos__repo"
+            key={repo.id}
+            onClick={handleOnClick}
+        >
+            {repo.name}
+        </li>
     )
 }
 
