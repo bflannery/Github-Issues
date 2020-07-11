@@ -1,13 +1,13 @@
 @import 'common';
 
 .issues {
-  &__list-container {
+  &-list-container {
     height: 90vh;
     overflow: scroll;
   }
-  &__list {
+  &-list {
   }
-  &__issue {
+  &-issue {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -27,4 +27,17 @@
       width: 40px;
     }
   }
+}
+
+.issue-assignee-img-container {
+  margin: .6rem 0;
+}
+
+.issue-assignee-img {
+  height: 40px;
+  width: 40px;
+}
+.issue-attribute-container {
+  display: flex;
+  flex-direction: column;
 }

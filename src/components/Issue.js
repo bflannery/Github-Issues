@@ -10,6 +10,12 @@ const ItemTypes = {
 const Issue = ({ issue, index, moveIssue }) => {
     const { assignee } = issue
 
+    const ISSUE_STATE_STYLE = {
+        height: '1rem',
+        margin: '1.5rem 0',
+        borderRadius: '15px',
+        backgroundColor: issue.state === 'open' ? '#28a745' : '#dc3545'
+    }
     const avatarSrc = (
         assignee !== null && assignee.hasOwnProperty('avatar_url')
             ? assignee.avatar_url
@@ -85,21 +91,52 @@ const Issue = ({ issue, index, moveIssue }) => {
         <li
             ref={ref}
             style={{  opacity }}
-            className="issues__issue"
+            className="issues-issue"
             key={issue.id}
         >
-            <img
-                className="issues__issue-assignee-img"
-                src={avatarSrc}
-                alt="assignee-avatar"
-            />
-            <h4
-                className="issues__issue-title"
-            >
-                {issue.title}
-            </h4>
-            <h6>{issue.createdAt}</h6>
-            <h6>{issue.updatedAt}</h6>
+            <div className="issue-attribute-container">
+                <h6 className="issue-attribute-header">
+                    State
+                </h6 >
+                <div className="issues-state-container" style={ISSUE_STATE_STYLE}/>
+            </div>
+            <div className="issue-attribute-container">
+                <h6 className="issue-attribute-header">
+                    Assignee
+                </h6 >
+                <div className="issue-assignee-img-container">
+                    <img
+                        className="issue-assignee-img"
+                        src={avatarSrc}
+                        alt="assignee-avatar"
+                    />
+                </div>
+
+            </div>
+            <div className="issue-attribute-container">
+                <h6 className="issue-attribute-header">
+                    Title
+                </h6>
+                <h6 className="issues__issue-title">
+                    {issue.title}
+                </h6>
+            </div>
+            <div className="issue-attribute-container">
+                <h6 className="Created At">
+                    Created At
+                </h6>
+                <h6>{issue.createdAt}</h6>
+            </div>
+            <div className="issue-attribute-container">
+                <h6 className="Updated At">
+                    Created At
+                </h6>
+                <h6>{issue.updatedAt}</h6>
+            </div>
+
+
+
+
         </li>
     )
 }

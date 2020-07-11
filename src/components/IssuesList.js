@@ -65,8 +65,8 @@ const IssuesList = memo(({ selectedRepo, issues }) => {
     )
 
     return (
-        <div className="issues__list-container">
-            <ul className="issues__list">
+        <div className="issues-list-container">
+            <ul className="issues-list">
                 {issuesList.map((issue, index) => (
                     <Issue
                         key={issue.id}
