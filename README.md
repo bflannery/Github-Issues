@@ -1,4 +1,16 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Github Issues
+
+GitHub issues creates a simple interface that will aid a product manager in prioritizing issues and/or enhancements 
+for a given repository.
+
+When a user hits the site, they should submit an appropriate GitHub API key.  Once the API key is submitted, the user 
+will be navigated to the prioritization interface.
+
+When a user first loads the application, they should be able to choose a given repository that
+they have access to. Once selecting this repository, the screen should change from a single
+column interface to a two column interface. The left side depicting a list of repositories the user
+has access to and the right being the encapsulated issues of the given repository.
+
 
 ## Available Scripts
 
