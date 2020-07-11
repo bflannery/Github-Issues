@@ -57,11 +57,13 @@ const App = () => {
     const reduxState = useSelector(state => state)
     const { repos, issues } = reduxState
 
+    // TODO:
     // Handle api key change
     const handleOnChange = e => {
       console.log({ e })
     }
 
+    // TODO:
     // Submit new api key
     const handleGetUserRepos = e => {
         console.log({ e })

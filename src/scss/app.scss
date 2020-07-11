@@ -1,3 +1,5 @@
+@import 'common';
+
 .app-page {
   display: flex;
   height: 100vh;
@@ -81,3 +83,20 @@
 
   }
 }
+
+
+@media (max-width: $screen-md-max) {
+  .app-page {
+    &-content {
+      display: block;
+    }
+    &-left-column-container,  &-right-column-container{
+      display: block;
+      width: 100%;
+    }
+    &-right-column-card {
+      width: initial;
+    }
+  }
+}
+

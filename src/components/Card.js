@@ -12,10 +12,8 @@ const Card = ({
                     {title}
                 </h4>
             </div>
-            <div>
-                <div className="app-page-left-column-card-body card__body">
-                    {children}
-                </div>
+            <div className="app-page-left-column-card-body card__body">
+                {children}
             </div>
         </div>
     )
