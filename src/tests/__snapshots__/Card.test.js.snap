@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Repo Component should render stuff 1`] = `
+<div
+  className="undefined-card card"
+>
+  <div
+    className="undefined-card-header card__header"
+  >
+    <h4
+      className="undefined-card-header-title card__header-title"
+    />
+  </div>
+  <div
+    className="app-page-left-column-card-body card__body"
+  />
+</div>
+`;
