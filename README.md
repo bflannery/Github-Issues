@@ -11,6 +11,8 @@ they have access to. Once selecting this repository, the screen should change fr
 column interface to a two column interface. The left side depicting a list of repositories the user
 has access to and the right being the encapsulated issues of the given repository.
 
+Note: Built without a Backend service or Bootstrap or styling library. App is meant to showcase React/Redux infrastructure and tooling.
+
 
 ## Available Scripts
 
